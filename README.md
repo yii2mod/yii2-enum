@@ -1,5 +1,25 @@
 Enumerable helper
 ========================================
+Installation
+------------
+
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+
+Either run
+
+```
+php composer.phar require --prefer-dist yii2mod/yii2-enum "*"
+```
+
+or add
+
+```
+"yii2mod/yii2-enum": "*"
+```
+
+to the require section of your `composer.json` file.
+
+
 ### Example enumerable class
 ```php
 use yii2mod\enum\helpers\BaseEnum;
