@@ -142,7 +142,7 @@ abstract class BaseEnum
         if (isset($list[$value])) {
             return \Yii::t('enum', $list[$value]);
         }
-        return false;
+        return null;
     }
 
     /**
