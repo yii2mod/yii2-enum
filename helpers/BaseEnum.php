@@ -1,8 +1,10 @@
 <?php
+
 namespace yii2mod\enum\helpers;
 
-
 use ReflectionClass;
+use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 
 /**
@@ -18,14 +20,14 @@ abstract class BaseEnum
      *
      * @var array
      */
-    private static $byName = array();
+    private static $byName = [];
 
     /**
      * The cached list of constants by value.
      *
      * @var array
      */
-    private static $byValue = array();
+    private static $byValue = [];
 
     /**
      * The value managed by this type instance.
@@ -58,12 +60,12 @@ abstract class BaseEnum
     /**
      * Creates a new type instance for a called name.
      *
-     * @param string $name      The name of the value.
-     * @param array  $arguments An ignored list of arguments.
+     * @param string $name The name of the value.
+     * @param array $arguments An ignored list of arguments.
      *
      * @return $this The new type instance.
      */
-    public static function __callStatic($name, array $arguments = array())
+    public static function __callStatic($name, array $arguments = [])
     {
         return self::createByName($name);
     }
@@ -93,10 +95,12 @@ abstract class BaseEnum
      * @param $value
      * @return mixed
      */
-    public static function getValueByName($value){
+    public static function getValueByName($value)
+    {
         $list = self::listData();
         return array_search($value, $list);
     }
+
     /**
      * Creates a new type instance using the value.
      *
@@ -118,6 +122,7 @@ abstract class BaseEnum
     }
 
     /**
+     * Get list data
      * @static
      * @return mixed
      */
@@ -128,19 +133,22 @@ abstract class BaseEnum
             $reflection = new ReflectionClass($class);
             self::$list[$class] = $reflection->getStaticPropertyValue('list');
         }
-        return self::$list[$class];
+        $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
+            return Yii::t('app', $value);
+        });
+        return $result;
     }
 
     /**
+     * Get label by value
      * @var string value
      * @return string label
-     * @author Gladchenko Oleg
      */
     public static function getLabel($value)
     {
         $list = self::listData();
         if (isset($list[$value])) {
-            return \Yii::t('enum', $list[$value]);
+            return Yii::t('enum', $list[$value]);
         }
         return null;
     }
@@ -184,14 +192,14 @@ abstract class BaseEnum
         if (!isset(self::$byValue[$class])) {
             self::getConstantsByName();
 
-            self::$byValue[$class] = array();
+            self::$byValue[$class] = [];
 
             foreach (self::$byName[$class] as $name => $value) {
                 if (array_key_exists($value, self::$byValue[$class])) {
                     if (!is_array(self::$byValue[$class][$value])) {
-                        self::$byValue[$class][$value] = array(
+                        self::$byValue[$class][$value] = [
                             self::$byValue[$class][$value]
-                        );
+                        ];
                     }
                     self::$byValue[$class][$value][] = $name;;
                 } else {
