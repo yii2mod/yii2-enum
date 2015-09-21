@@ -42,6 +42,11 @@ abstract class BaseEnum
     private static $list;
 
     /**
+     * @var string message category
+     */
+    public static $messageCategory = 'yii2mod.enum';
+
+    /**
      * Sets the value that will be managed by this type instance.
      *
      * @param mixed $value The value to be managed.
@@ -134,7 +139,7 @@ abstract class BaseEnum
             self::$list[$class] = $reflection->getStaticPropertyValue('list');
         }
         $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
-            return Yii::t('yii2mod.enum', $value);
+            return Yii::t(self::$messageCategory, $value);
         });
         return $result;
     }
@@ -148,7 +153,7 @@ abstract class BaseEnum
     {
         $list = self::listData();
         if (isset($list[$value])) {
-            return Yii::t('yii2mod.enum', $list[$value]);
+            return Yii::t(self::$messageCategory, $list[$value]);
         }
         return null;
     }
