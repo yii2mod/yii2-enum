@@ -134,7 +134,7 @@ abstract class BaseEnum
             self::$list[$class] = $reflection->getStaticPropertyValue('list');
         }
         $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
-            return Yii::t('app', $value);
+            return Yii::t('yii2mod.enum', $value);
         });
         return $result;
     }
@@ -148,7 +148,7 @@ abstract class BaseEnum
     {
         $list = self::listData();
         if (isset($list[$value])) {
-            return Yii::t('enum', $list[$value]);
+            return Yii::t('yii2mod.enum', $list[$value]);
         }
         return null;
     }
