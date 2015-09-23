@@ -144,16 +144,16 @@ abstract class BaseEnum
         return $result;
     }
 
-    /**
+   /**
      * Get label by value
      * @var string value
      * @return string label
      */
     public static function getLabel($value)
     {
-        $list = self::listData();
+        $list = static::$list;
         if (isset($list[$value])) {
-            return Yii::t(self::$messageCategory, $list[$value]);
+            return Yii::t(static::$messageCategory, $list[$value]);
         }
         return null;
     }
@@ -244,7 +244,7 @@ abstract class BaseEnum
      * @param string $name The name of the value.
      *
      * @return boolean If the name is valid for this type, `true` is returned.
-     *                 Otherwise, the name is not valid and `false` is returned.
+     * Otherwise, the name is not valid and `false` is returned.
      */
     public static function isValidName($name)
     {
@@ -259,7 +259,7 @@ abstract class BaseEnum
      * @param string $value The value.
      *
      * @return boolean If the value is valid for this type, `true` is returned.
-     *                 Otherwise, the value is not valid and `false` is returned.
+     * Otherwise, the value is not valid and `false` is returned.
      */
     public static function isValidValue($value)
     {
