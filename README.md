@@ -25,6 +25,7 @@ to the require section of your `composer.json` file.
 use yii2mod\enum\helpers\BaseEnum;
 class YesNoEnumerable extends BaseEnum
 {
+    public static $messageCategory = 'app';
     const YES = 1;
     const NO = 2;
 
