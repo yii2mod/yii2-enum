@@ -10,7 +10,6 @@ use yii\web\BadRequestHttpException;
 /**
  * Class BaseEnum
  * @author  Dmitry Semenov <disemx@gmail.com>
- * @see     https://github.com/php-mountain/Enum/
  * @package yii2mod\enum\helpers
  */
 abstract class BaseEnum
