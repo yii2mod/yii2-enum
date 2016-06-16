@@ -1,11 +1,10 @@
 <?php
+
 namespace yii2mod\enum\helpers;
 
-
-
 /**
- * @author  Kravchuk Dmitry
- * @package yii2mod\cms\models\enumerables
+ * Class BooleanEnum
+ * @package yii2mod\enum\helpers
  */
 class BooleanEnum extends BaseEnum
 {
@@ -13,7 +12,7 @@ class BooleanEnum extends BaseEnum
     const NO = 0;
 
     public static $list = [
-        self::NO => 'No',
-        self::YES => 'Yes'
+        self::YES => 'Yes',
+        self::NO => 'No'
     ];
 }
