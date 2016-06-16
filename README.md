@@ -24,33 +24,50 @@ or add
 
 to the require section of your `composer.json` file.
 
+## Available Methods:
 
-### Example enumerable class
+- `createByName()` - Creates a new type instance using the name of a value.
+- `getValueByName()` - Returns the constant key by value(label)
+- `createByValue()` - Creates a new type instance using the value.
+- `listData()` - Returns the associative array with constants values and labels
+- `getLabel()`- Returns the constant label by key
+- `getConstantsByName()` - Returns the list of constants (by name) for this type.
+- `getConstantsByValue()` - Returns the list of constants (by value) for this type.
+- `isValidName()` - Checks if a name is valid for this type.
+- `isValidValue()` - Checks if a value is valid for this type.
+
+## Declaration
+
 ```php
 use yii2mod\enum\helpers\BaseEnum;
-class YesNoEnumerable extends BaseEnum
-{
-    public static $messageCategory = 'app';
-    const YES = 1;
-    const NO = 2;
 
+class BooleanEnum extends BaseEnum
+{
+    const YES = 1;
+    const NO = 0;
+    
+    /**
+     * @var string message category
+     * You can set your own message category for translate the values in the $list property
+     * Values in the $list property will be automatically translated in the function `listData()`
+     */
+    public static $messageCategory = 'app';
+    
     public static $list = [
         self::YES => 'Yes',
-        self::NO   => 'No'
+        self::NO => 'No'
     ];
 }
 ```
-### Example usage
+## Usage
 ```php
-        var_dump(YesNoEnumerable::YES);
-        var_dump(YesNoEnumerable::NO);
-        var_dump(YesNoEnumerable::getConstantsByValue());
-        var_dump(YesNoEnumerable::getConstantsByName());
-        var_dump(YesNoEnumerable::isValidName(1)); // false
-        var_dump(YesNoEnumerable::isValidName('YES'));
-        var_dump(YesNoEnumerable::isValidValue(1));
-        var_dump(YesNoEnumerable::isValidValue('YES')); //false
-        var_dump(YesNoEnumerable::listData());
-        var_dump(YesNoEnumerable::getLabel(1));
-        var_dump(YesNoEnumerable::getLabel('YES')); // false
+BooleanEnum::getConstantsByValue() // [1 => 'YES', 0 => 'NO']
+BooleanEnum::getConstantsByName() // ['YES' => 1, 'NO' => 0]
+BooleanEnum::isValidName(1) // false
+BooleanEnum::isValidName('YES') // true
+BooleanEnum::isValidValue(1) // true
+BooleanEnum::isValidValue('Yes') // false
+BooleanEnum::listData() // [1 => 'Yes', 0 => 'No']
+BooleanEnum::getLabel(1) // Yes
+BooleanEnum::getValueByName('Yes') // 1
 ```
