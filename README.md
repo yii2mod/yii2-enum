@@ -2,7 +2,6 @@ Enumerable helper
 ========================================
 An enumeration implementation for Yii Framework 2.0
 
-
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-enum/v/stable)](https://packagist.org/packages/yii2mod/yii2-enum) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-enum/downloads)](https://packagist.org/packages/yii2mod/yii2-enum) [![License](https://poser.pugx.org/yii2mod/yii2-enum/license)](https://packagist.org/packages/yii2mod/yii2-enum)
 
 Installation
