@@ -33,6 +33,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => $this->getVendorPath(),
+            'components' => [
+                'i18n' => [
+                    'translations' => [
+                        '*' => [
+                            'class' => 'yii\i18n\PhpMessageSource',
+                            'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+                            'sourceLanguage' => 'en'
+                        ],
+                    ],
+                ],
+            ]
         ], $config));
     }
 
