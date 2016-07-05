@@ -6,7 +6,7 @@
 		convertWarningsToExceptions="true"
 		stopOnFailure="false">
 		<testsuites>
-			<testsuite name="Yii2tech Test Suite">
+			<testsuite name="Yii2mod Test Suite">
 				<directory>./tests</directory>
 			</testsuite>
 		</testsuites>
