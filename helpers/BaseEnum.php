@@ -43,7 +43,7 @@ abstract class BaseEnum
     /**
      * @var string message category
      */
-    public static $messageCategory = 'yii2mod.enum';
+    public static $messageCategory = 'app';
 
     /**
      * Sets the value that will be managed by this type instance.
