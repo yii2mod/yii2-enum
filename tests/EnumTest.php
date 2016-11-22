@@ -6,6 +6,7 @@ use yii2mod\enum\tests\data\BooleanEnum;
 
 /**
  * Class EnumTest
+ *
  * @package yii2mod\enum\tests
  */
 class EnumTest extends TestCase

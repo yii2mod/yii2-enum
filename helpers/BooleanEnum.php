@@ -4,6 +4,7 @@ namespace yii2mod\enum\helpers;
 
 /**
  * Class BooleanEnum
+ *
  * @package yii2mod\enum\helpers
  */
 class BooleanEnum extends BaseEnum
@@ -13,6 +14,6 @@ class BooleanEnum extends BaseEnum
 
     public static $list = [
         self::YES => 'Yes',
-        self::NO => 'No'
+        self::NO => 'No',
     ];
 }

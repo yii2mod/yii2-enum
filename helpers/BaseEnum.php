@@ -9,7 +9,9 @@ use yii\web\BadRequestHttpException;
 
 /**
  * Class BaseEnum
+ *
  * @author  Dmitry Semenov <disemx@gmail.com>
+ *
  * @package yii2mod\enum\helpers
  */
 abstract class BaseEnum
@@ -48,14 +50,14 @@ abstract class BaseEnum
     /**
      * Sets the value that will be managed by this type instance.
      *
-     * @param mixed $value The value to be managed.
+     * @param mixed $value The value to be managed
      *
-     * @throws BadRequestHttpException If the value is not valid.
+     * @throws BadRequestHttpException If the value is not valid
      */
     public function __construct($value)
     {
         if (!self::isValidValue($value)) {
-            throw new BadRequestHttpException;
+            throw new BadRequestHttpException();
         }
 
         $this->value = $value;
@@ -64,10 +66,10 @@ abstract class BaseEnum
     /**
      * Creates a new type instance for a called name.
      *
-     * @param string $name The name of the value.
-     * @param array $arguments An ignored list of arguments.
+     * @param string $name The name of the value
+     * @param array $arguments An ignored list of arguments
      *
-     * @return $this The new type instance.
+     * @return $this The new type instance
      */
     public static function __callStatic($name, array $arguments = [])
     {
@@ -77,18 +79,18 @@ abstract class BaseEnum
     /**
      * Creates a new type instance using the name of a value.
      *
-     * @param string $name The name of a value.
+     * @param string $name The name of a value
      *
      * @throws \yii\web\BadRequestHttpException
-     * @return $this The new type instance.
      *
+     * @return $this The new type instance
      */
     public static function createByName($name)
     {
         $constants = self::getConstantsByName();
 
         if (!array_key_exists($name, $constants)) {
-            throw new BadRequestHttpException;
+            throw new BadRequestHttpException();
         }
 
         return new static($constants[$name]);
@@ -96,30 +98,33 @@ abstract class BaseEnum
 
     /**
      * get constant key by value(label)
+     *
      * @param $value
+     *
      * @return mixed
      */
     public static function getValueByName($value)
     {
         $list = self::listData();
+
         return array_search($value, $list);
     }
 
     /**
      * Creates a new type instance using the value.
      *
-     * @param mixed $value The value.
+     * @param mixed $value The value
      *
      * @throws \yii\web\BadRequestHttpException
-     * @return $this The new type instance.
      *
+     * @return $this The new type instance
      */
     public static function createByValue($value)
     {
         $constants = self::getConstantsByValue();
 
         if (!array_key_exists($value, $constants)) {
-            throw new BadRequestHttpException;
+            throw new BadRequestHttpException();
         }
 
         return new static($value);
@@ -127,7 +132,9 @@ abstract class BaseEnum
 
     /**
      * Get list data
+     *
      * @static
+     *
      * @return mixed
      */
     public static function listData()
@@ -140,12 +147,15 @@ abstract class BaseEnum
         $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
             return Yii::t(self::$messageCategory, $value);
         });
+
         return $result;
     }
 
-   /**
+    /**
      * Get label by value
+     *
      * @var string value
+     *
      * @return string label
      */
     public static function getLabel($value)
@@ -154,13 +164,14 @@ abstract class BaseEnum
         if (isset($list[$value])) {
             return Yii::t(static::$messageCategory, $list[$value]);
         }
+
         return null;
     }
 
     /**
      * Returns the list of constants (by name) for this type.
      *
-     * @return array The list of constants by name.
+     * @return array The list of constants by name
      */
     public static function getConstantsByName()
     {
@@ -187,7 +198,7 @@ abstract class BaseEnum
     /**
      * Returns the list of constants (by value) for this type.
      *
-     * @return array The list of constants by value.
+     * @return array The list of constants by value
      */
     public static function getConstantsByValue()
     {
@@ -202,10 +213,10 @@ abstract class BaseEnum
                 if (array_key_exists($value, self::$byValue[$class])) {
                     if (!is_array(self::$byValue[$class][$value])) {
                         self::$byValue[$class][$value] = [
-                            self::$byValue[$class][$value]
+                            self::$byValue[$class][$value],
                         ];
                     }
-                    self::$byValue[$class][$value][] = $name;;
+                    self::$byValue[$class][$value][] = $name;
                 } else {
                     self::$byValue[$class][$value] = $name;
                 }
@@ -218,7 +229,7 @@ abstract class BaseEnum
     /**
      * Returns the name of the value.
      *
-     * @return array|string The name, or names, of the value.
+     * @return array|string The name, or names, of the value
      */
     public function getName()
     {
@@ -230,7 +241,7 @@ abstract class BaseEnum
     /**
      * Unwraps the type and returns the raw value.
      *
-     * @return mixed The raw value managed by the type instance.
+     * @return mixed The raw value managed by the type instance
      */
     public function getValue()
     {
@@ -240,10 +251,10 @@ abstract class BaseEnum
     /**
      * Checks if a name is valid for this type.
      *
-     * @param string $name The name of the value.
+     * @param string $name The name of the value
      *
-     * @return boolean If the name is valid for this type, `true` is returned.
-     * Otherwise, the name is not valid and `false` is returned.
+     * @return bool If the name is valid for this type, `true` is returned.
+     * Otherwise, the name is not valid and `false` is returned
      */
     public static function isValidName($name)
     {
@@ -255,10 +266,10 @@ abstract class BaseEnum
     /**
      * Checks if a value is valid for this type.
      *
-     * @param string $value The value.
+     * @param string $value The value
      *
-     * @return boolean If the value is valid for this type, `true` is returned.
-     * Otherwise, the value is not valid and `false` is returned.
+     * @return bool If the value is valid for this type, `true` is returned.
+     * Otherwise, the value is not valid and `false` is returned
      */
     public static function isValidValue($value)
     {

@@ -2,7 +2,11 @@
     "name": "yii2mod/yii2-enum",
     "description": "Yii2 Enumerable helpers",
     "type": "yii2-extension",
-    "keywords": ["yii2", "extension"],
+    "keywords": [
+        "yii2",
+        "yii2 enum",
+        "enumerable helper"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -12,6 +16,9 @@
     ],
     "require": {
         "yiisoft/yii2": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~1.7"
     },
     "autoload": {
         "psr-4": {

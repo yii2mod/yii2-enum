@@ -6,6 +6,7 @@ use yii2mod\enum\helpers\BaseEnum;
 
 /**
  * Class BooleanEnum
+ *
  * @package yii2mod\enum\tests\data
  */
 class BooleanEnum extends BaseEnum
@@ -22,6 +23,6 @@ class BooleanEnum extends BaseEnum
 
     public static $list = [
         self::YES => 'Yes',
-        self::NO => 'No'
+        self::NO => 'No',
     ];
 }
