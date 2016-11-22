@@ -27,4 +27,36 @@ class EnumTest extends TestCase
         $this->assertTrue(BooleanEnum::isValidValue(1));
         $this->assertFalse(BooleanEnum::isValidValue('YES'));
     }
+
+    public function testCreateByName()
+    {
+        $enum = BooleanEnum::createByName('YES');
+
+        $this->assertEquals(BooleanEnum::YES, $enum->getValue());
+        $this->assertTrue(array_key_exists($enum->getName(), BooleanEnum::getConstantsByName()));
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function testFailedCreateByName()
+    {
+        BooleanEnum::createByName('not existing name');
+    }
+
+    public function testCreateByValue()
+    {
+        $enum = BooleanEnum::createByValue(BooleanEnum::YES);
+
+        $this->assertEquals(BooleanEnum::YES, $enum->getValue());
+        $this->assertTrue(array_key_exists($enum->getName(), BooleanEnum::getConstantsByName()));
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function testFailedCreateByValue()
+    {
+        BooleanEnum::createByValue('not existing value');
+    }
 }

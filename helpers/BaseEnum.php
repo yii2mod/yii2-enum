@@ -3,19 +3,22 @@
 namespace yii2mod\enum\helpers;
 
 use ReflectionClass;
+use UnexpectedValueException;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\web\BadRequestHttpException;
 
 /**
  * Class BaseEnum
- *
- * @author  Dmitry Semenov <disemx@gmail.com>
  *
  * @package yii2mod\enum\helpers
  */
 abstract class BaseEnum
 {
+    /**
+     * @var string message category
+     */
+    public static $messageCategory = 'app';
+
     /**
      * The cached list of constants by name.
      *
@@ -31,49 +34,31 @@ abstract class BaseEnum
     private static $byValue = [];
 
     /**
-     * The value managed by this type instance.
-     *
-     * @var mixed
-     */
-    private $value;
-
-    /**
      * @var array list of properties
      */
     private static $list;
 
     /**
-     * @var string message category
+     * The value managed by this type instance.
+     *
+     * @var mixed
      */
-    public static $messageCategory = 'app';
+    private $_value;
 
     /**
      * Sets the value that will be managed by this type instance.
      *
      * @param mixed $value The value to be managed
      *
-     * @throws BadRequestHttpException If the value is not valid
+     * @throws UnexpectedValueException If the value is not valid
      */
     public function __construct($value)
     {
         if (!self::isValidValue($value)) {
-            throw new BadRequestHttpException();
+            throw new UnexpectedValueException("Value '{$value}' is not part of the enum " . get_called_class());
         }
 
-        $this->value = $value;
-    }
-
-    /**
-     * Creates a new type instance for a called name.
-     *
-     * @param string $name The name of the value
-     * @param array $arguments An ignored list of arguments
-     *
-     * @return $this The new type instance
-     */
-    public static function __callStatic($name, array $arguments = [])
-    {
-        return self::createByName($name);
+        $this->_value = $value;
     }
 
     /**
@@ -81,7 +66,7 @@ abstract class BaseEnum
      *
      * @param string $name The name of a value
      *
-     * @throws \yii\web\BadRequestHttpException
+     * @throws UnexpectedValueException
      *
      * @return $this The new type instance
      */
@@ -90,7 +75,7 @@ abstract class BaseEnum
         $constants = self::getConstantsByName();
 
         if (!array_key_exists($name, $constants)) {
-            throw new BadRequestHttpException();
+            throw new UnexpectedValueException("Name '{$name}' is not exists in the enum constants list " . get_called_class());
         }
 
         return new static($constants[$name]);
@@ -115,7 +100,7 @@ abstract class BaseEnum
      *
      * @param mixed $value The value
      *
-     * @throws \yii\web\BadRequestHttpException
+     * @throws UnexpectedValueException
      *
      * @return $this The new type instance
      */
@@ -124,7 +109,7 @@ abstract class BaseEnum
         $constants = self::getConstantsByValue();
 
         if (!array_key_exists($value, $constants)) {
-            throw new BadRequestHttpException();
+            throw new UnexpectedValueException("Value '{$value}' is not exists in the enum constants list " . get_called_class());
         }
 
         return new static($value);
@@ -140,10 +125,12 @@ abstract class BaseEnum
     public static function listData()
     {
         $class = get_called_class();
+
         if (!isset(self::$list[$class])) {
             $reflection = new ReflectionClass($class);
             self::$list[$class] = $reflection->getStaticPropertyValue('list');
         }
+
         $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
             return Yii::t(self::$messageCategory, $value);
         });
@@ -161,6 +148,7 @@ abstract class BaseEnum
     public static function getLabel($value)
     {
         $list = static::$list;
+
         if (isset($list[$value])) {
             return Yii::t(static::$messageCategory, $list[$value]);
         }
@@ -235,7 +223,7 @@ abstract class BaseEnum
     {
         $constants = self::getConstantsByValue();
 
-        return $constants[$this->value];
+        return $constants[$this->_value];
     }
 
     /**
@@ -245,7 +233,7 @@ abstract class BaseEnum
      */
     public function getValue()
     {
-        return $this->value;
+        return $this->_value;
     }
 
     /**
