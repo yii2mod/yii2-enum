@@ -41,10 +41,12 @@ to the require section of your `composer.json` file.
 ```php
 use yii2mod\enum\helpers\BaseEnum;
 
-class BooleanEnum extends BaseEnum
+class PostStatus extends BaseEnum
 {
-    const YES = 1;
-    const NO = 0;
+    const PENDING = 0;
+    const APPROVED = 1;
+    const REJECTED = 2;
+    const POSTPONED = 3;
     
     /**
      * @var string message category
@@ -53,21 +55,26 @@ class BooleanEnum extends BaseEnum
      */
     public static $messageCategory = 'app';
     
+    /**
+     * @var array
+     */
     public static $list = [
-        self::YES => 'Yes',
-        self::NO => 'No'
+        self::PENDING => 'Pending',
+        self::APPROVED => 'Approved',
+        self::REJECTED => 'Rejected',
+        self::POSTPONED => 'Postponed',
     ];
 }
 ```
 ## Usage
 ```php
-BooleanEnum::getConstantsByValue() // [1 => 'YES', 0 => 'NO']
-BooleanEnum::getConstantsByName() // ['YES' => 1, 'NO' => 0]
-BooleanEnum::isValidName(1) // false
-BooleanEnum::isValidName('YES') // true
-BooleanEnum::isValidValue(1) // true
-BooleanEnum::isValidValue('Yes') // false
-BooleanEnum::listData() // [1 => 'Yes', 0 => 'No']
-BooleanEnum::getLabel(1) // Yes
-BooleanEnum::getValueByName('Yes') // 1
+PostStatus::getConstantsByValue() // ['PENDING', 'APPROVED', 'REJECTED', 'POSTPONED']
+PostStatus::getConstantsByName() // ['PENDING' => 0, 'APPROVED' => 1, 'REJECTED' => 2, 'POSTPONED' => 3]
+PostStatus::isValidName(1) // false
+PostStatus::isValidName('APPROVED') // true
+PostStatus::isValidValue(1) // true
+PostStatus::isValidValue('Approved') // false
+PostStatus::listData() // ['Pending', 'Approved', 'Rejected', 'Postponed']
+PostStatus::getLabel(1) // Approved
+PostStatus::getValueByName('Approved') // 1
 ```

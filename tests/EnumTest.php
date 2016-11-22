@@ -2,7 +2,7 @@
 
 namespace yii2mod\enum\tests;
 
-use yii2mod\enum\tests\data\BooleanEnum;
+use yii2mod\enum\tests\data\PostStatus;
 
 /**
  * Class EnumTest
@@ -13,27 +13,27 @@ class EnumTest extends TestCase
 {
     public function testEnumMethods()
     {
-        $this->assertEquals([1 => 'YES', 0 => 'NO'], BooleanEnum::getConstantsByValue());
-        $this->assertEquals(['YES' => 1, 'NO' => 0], BooleanEnum::getConstantsByName());
-        $this->assertEquals([1 => 'Yes', 0 => 'No'], BooleanEnum::listData());
-        $this->assertEquals('Yes', BooleanEnum::getLabel(1));
-        $this->assertEquals('1', BooleanEnum::getValueByName('Yes'));
+        $this->assertEquals(['PENDING', 'APPROVED', 'REJECTED', 'POSTPONED'], PostStatus::getConstantsByValue());
+        $this->assertEquals(['PENDING' => 0, 'APPROVED' => 1, 'REJECTED' => 2, 'POSTPONED' => 3], PostStatus::getConstantsByName());
+        $this->assertEquals(['Pending', 'Approved', 'Rejected', 'Postponed'], PostStatus::listData());
+        $this->assertEquals('Pending', PostStatus::getLabel(PostStatus::PENDING));
+        $this->assertEquals(1, PostStatus::getValueByName('Approved'));
     }
 
     public function testValidation()
     {
-        $this->assertFalse(BooleanEnum::isValidName(1));
-        $this->assertTrue(BooleanEnum::isValidName('YES'));
-        $this->assertTrue(BooleanEnum::isValidValue(1));
-        $this->assertFalse(BooleanEnum::isValidValue('YES'));
+        $this->assertFalse(PostStatus::isValidName(1));
+        $this->assertTrue(PostStatus::isValidName('APPROVED'));
+        $this->assertTrue(PostStatus::isValidValue(1));
+        $this->assertFalse(PostStatus::isValidValue('APPROVED'));
     }
 
     public function testCreateByName()
     {
-        $enum = BooleanEnum::createByName('YES');
+        $enum = PostStatus::createByName('APPROVED');
 
-        $this->assertEquals(BooleanEnum::YES, $enum->getValue());
-        $this->assertTrue(array_key_exists($enum->getName(), BooleanEnum::getConstantsByName()));
+        $this->assertEquals(PostStatus::APPROVED, $enum->getValue());
+        $this->assertTrue(array_key_exists($enum->getName(), PostStatus::getConstantsByName()));
     }
 
     /**
@@ -41,15 +41,15 @@ class EnumTest extends TestCase
      */
     public function testFailedCreateByName()
     {
-        BooleanEnum::createByName('not existing name');
+        PostStatus::createByName('not existing name');
     }
 
     public function testCreateByValue()
     {
-        $enum = BooleanEnum::createByValue(BooleanEnum::YES);
+        $enum = PostStatus::createByValue(PostStatus::APPROVED);
 
-        $this->assertEquals(BooleanEnum::YES, $enum->getValue());
-        $this->assertTrue(array_key_exists($enum->getName(), BooleanEnum::getConstantsByName()));
+        $this->assertEquals(PostStatus::APPROVED, $enum->getValue());
+        $this->assertTrue(array_key_exists($enum->getName(), PostStatus::getConstantsByName()));
     }
 
     /**
@@ -57,6 +57,6 @@ class EnumTest extends TestCase
      */
     public function testFailedCreateByValue()
     {
-        BooleanEnum::createByValue('not existing value');
+        PostStatus::createByValue('not existing value');
     }
 }
