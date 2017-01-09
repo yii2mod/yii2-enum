@@ -52,6 +52,14 @@ class EnumTest extends TestCase
         $this->assertTrue(array_key_exists($enum->getName(), PostStatus::getConstantsByName()));
     }
 
+    public function testCreateByStaticFunction()
+    {
+        $enum = PostStatus::APPROVED();
+
+        $this->assertEquals(PostStatus::APPROVED, $enum->getValue());
+        $this->assertTrue(array_key_exists($enum->getName(), PostStatus::getConstantsByName()));
+    }
+
     /**
      * @expectedException \UnexpectedValueException
      */

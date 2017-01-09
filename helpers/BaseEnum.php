@@ -2,6 +2,7 @@
 
 namespace yii2mod\enum\helpers;
 
+use BadMethodCallException;
 use ReflectionClass;
 use UnexpectedValueException;
 use Yii;
@@ -264,5 +265,34 @@ abstract class BaseEnum
         $constants = self::getConstantsByValue();
 
         return array_key_exists($value, $constants);
+    }
+
+    /**
+     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
+     *
+     * @param string $name
+     * @param array $arguments
+     *
+     * @return static
+     *
+     * @throws BadMethodCallException
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        $constants = static::getConstantsByName();
+
+        if (isset($constants[$name])) {
+            return new static($constants[$name]);
+        }
+
+        throw new BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->_value;
     }
 }

@@ -39,6 +39,10 @@ to the require section of your `composer.json` file.
 ## Declaration
 
 ```php
+<?php
+
+namespace app\models\enums;
+
 use yii2mod\enum\helpers\BaseEnum;
 
 class PostStatus extends BaseEnum
@@ -66,7 +70,16 @@ class PostStatus extends BaseEnum
     ];
 }
 ```
-## Usage
+## Enum creation
+```php
+$status = new PostStatus(PostStatus::PENDING);
+
+// or you can use the magic methods
+
+$status = PostStatus::PENDING();
+```
+
+## Static methods
 ```php
 PostStatus::getConstantsByValue() // ['PENDING', 'APPROVED', 'REJECTED', 'POSTPONED']
 PostStatus::getConstantsByName() // ['PENDING' => 0, 'APPROVED' => 1, 'REJECTED' => 2, 'POSTPONED' => 3]
@@ -78,3 +91,35 @@ PostStatus::listData() // ['Pending', 'Approved', 'Rejected', 'Postponed']
 PostStatus::getLabel(1) // Approved
 PostStatus::getValueByName('Approved') // 1
 ```
+## Type-Hint and Validation Rules
+```php
+<?php
+
+use models\enums\PostStatus;
+use yii\db\ActiveRecord;
+
+class CommentModel extends ActiveRecord
+{
+    public function rules()
+    {
+        return [
+            ['status', 'default', 'value' => PostStatus::APPROVED],
+            ['status', 'in', 'range' => PostStatus::getConstantsByName()],
+        ];
+    }
+
+    public function setStatus(PostStatus $status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        if (!$this->status) {
+            $this->status = PostStatus::PENDING();
+        }
+        return $this->status;
+    }
+}
+```
+
