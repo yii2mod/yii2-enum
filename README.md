@@ -115,9 +115,6 @@ class CommentModel extends ActiveRecord
 
     public function getStatus()
     {
-        if (!$this->status) {
-            $this->status = PostStatus::PENDING;
-        }
         return $this->status;
     }
 }
