@@ -12,9 +12,14 @@
         {
             "name": "Dmitry Semenov",
             "email": "disemx@gmail.com"
+        },
+        {
+            "name": "Igor Chepurnoi",
+            "email": "igorzfort@gmail.com"
         }
     ],
     "require": {
+        "php": ">=5.6",
         "yiisoft/yii2": "*"
     },
     "require-dev": {

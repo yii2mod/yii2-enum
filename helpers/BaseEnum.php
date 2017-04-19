@@ -25,26 +25,26 @@ abstract class BaseEnum
      *
      * @var array
      */
-    private static $byName = [];
+    protected static $byName = [];
 
     /**
      * The cached list of constants by value.
      *
      * @var array
      */
-    private static $byValue = [];
+    protected static $byValue = [];
 
     /**
      * @var array list of properties
      */
-    private static $list;
+    protected static $list = [];
 
     /**
      * The value managed by this type instance.
      *
      * @var mixed
      */
-    private $_value;
+    protected $value;
 
     /**
      * Sets the value that will be managed by this type instance.
@@ -55,11 +55,11 @@ abstract class BaseEnum
      */
     public function __construct($value)
     {
-        if (!self::isValidValue($value)) {
+        if (!static::isValidValue($value)) {
             throw new UnexpectedValueException("Value '{$value}' is not part of the enum " . get_called_class());
         }
 
-        $this->_value = $value;
+        $this->value = $value;
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class BaseEnum
      */
     public static function createByName($name)
     {
-        $constants = self::getConstantsByName();
+        $constants = static::getConstantsByName();
 
         if (!array_key_exists($name, $constants)) {
             throw new UnexpectedValueException("Name '{$name}' is not exists in the enum constants list " . get_called_class());
@@ -91,9 +91,7 @@ abstract class BaseEnum
      */
     public static function getValueByName($value)
     {
-        $list = self::listData();
-
-        return array_search($value, $list);
+        return array_search($value, static::listData());
     }
 
     /**
@@ -107,9 +105,7 @@ abstract class BaseEnum
      */
     public static function createByValue($value)
     {
-        $constants = self::getConstantsByValue();
-
-        if (!array_key_exists($value, $constants)) {
+        if (!array_key_exists($value, static::getConstantsByValue())) {
             throw new UnexpectedValueException("Value '{$value}' is not exists in the enum constants list " . get_called_class());
         }
 
@@ -119,24 +115,13 @@ abstract class BaseEnum
     /**
      * Get list data
      *
-     * @static
-     *
      * @return mixed
      */
     public static function listData()
     {
-        $class = get_called_class();
-
-        if (!isset(self::$list[$class])) {
-            $reflection = new ReflectionClass($class);
-            self::$list[$class] = $reflection->getStaticPropertyValue('list');
-        }
-
-        $result = ArrayHelper::getColumn(self::$list[$class], function ($value) {
-            return Yii::t(self::$messageCategory, $value);
+        return ArrayHelper::getColumn(static::$list, function ($value) {
+            return Yii::t(static::$messageCategory, $value);
         });
-
-        return $result;
     }
 
     /**
@@ -166,22 +151,12 @@ abstract class BaseEnum
     {
         $class = get_called_class();
 
-        if (!isset(self::$byName[$class])) {
+        if (!array_key_exists($class, static::$byName)) {
             $reflection = new ReflectionClass($class);
-            self::$byName[$class] = $reflection->getConstants();
-            while (false !== ($reflection = $reflection->getParentClass())) {
-                if (__CLASS__ === $reflection->getName()) {
-                    break;
-                }
-
-                self::$byName[$class] = array_replace(
-                    $reflection->getConstants(),
-                    self::$byName[$class]
-                );
-            }
+            static::$byName[$class] = $reflection->getConstants();
         }
 
-        return self::$byName[$class];
+        return static::$byName[$class];
     }
 
     /**
@@ -193,26 +168,11 @@ abstract class BaseEnum
     {
         $class = get_called_class();
 
-        if (!isset(self::$byValue[$class])) {
-            self::getConstantsByName();
-
-            self::$byValue[$class] = [];
-
-            foreach (self::$byName[$class] as $name => $value) {
-                if (array_key_exists($value, self::$byValue[$class])) {
-                    if (!is_array(self::$byValue[$class][$value])) {
-                        self::$byValue[$class][$value] = [
-                            self::$byValue[$class][$value],
-                        ];
-                    }
-                    self::$byValue[$class][$value][] = $name;
-                } else {
-                    self::$byValue[$class][$value] = $name;
-                }
-            }
+        if (!isset(static::$byValue[$class])) {
+            static::$byValue[$class] = array_flip(static::getConstantsByName());
         }
 
-        return self::$byValue[$class];
+        return static::$byValue[$class];
     }
 
     /**
@@ -222,9 +182,9 @@ abstract class BaseEnum
      */
     public function getName()
     {
-        $constants = self::getConstantsByValue();
+        $constants = static::getConstantsByValue();
 
-        return $constants[$this->_value];
+        return $constants[$this->value];
     }
 
     /**
@@ -234,7 +194,7 @@ abstract class BaseEnum
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -247,9 +207,7 @@ abstract class BaseEnum
      */
     public static function isValidName($name)
     {
-        $constants = self::getConstantsByName();
-
-        return array_key_exists($name, $constants);
+        return array_key_exists($name, static::getConstantsByName());
     }
 
     /**
@@ -262,9 +220,7 @@ abstract class BaseEnum
      */
     public static function isValidValue($value)
     {
-        $constants = self::getConstantsByValue();
-
-        return array_key_exists($value, $constants);
+        return array_key_exists($value, static::getConstantsByValue());
     }
 
     /**
@@ -293,6 +249,6 @@ abstract class BaseEnum
      */
     public function __toString()
     {
-        return (string)$this->_value;
+        return (string) $this->value;
     }
 }
