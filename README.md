@@ -1,6 +1,12 @@
-Enumerable helper
-========================================
-An enumeration implementation for Yii Framework 2.0
+<p align="center">
+    <a href="https://github.com/yiisoft" target="_blank">
+        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
+    </a>
+    <h1 align="center">Enum Extension for Yii2</h1>
+    <br>
+</p>
+
+Enum implementation for Yii Framework 2.0
 
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-enum/v/stable)](https://packagist.org/packages/yii2mod/yii2-enum) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-enum/downloads)](https://packagist.org/packages/yii2mod/yii2-enum) [![License](https://poser.pugx.org/yii2mod/yii2-enum/license)](https://packagist.org/packages/yii2mod/yii2-enum)
 [![Build Status](https://travis-ci.org/yii2mod/yii2-enum.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-enum)
