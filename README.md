@@ -10,6 +10,7 @@ Enum implementation for Yii Framework 2.0
 
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-enum/v/stable)](https://packagist.org/packages/yii2mod/yii2-enum) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-enum/downloads)](https://packagist.org/packages/yii2mod/yii2-enum) [![License](https://poser.pugx.org/yii2mod/yii2-enum/license)](https://packagist.org/packages/yii2mod/yii2-enum)
 [![Build Status](https://travis-ci.org/yii2mod/yii2-enum.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-enum)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yii2mod/yii2-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yii2mod/yii2-enum/?branch=master)
 
 Installation
 ------------
