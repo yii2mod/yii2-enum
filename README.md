@@ -12,6 +12,11 @@ Enum implementation for Yii Framework 2.0
 [![Build Status](https://travis-ci.org/yii2mod/yii2-enum.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-enum)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yii2mod/yii2-enum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yii2mod/yii2-enum/?branch=master)
 
+## Support us
+
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/yii2mod). 
+All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
+
 Installation
 ------------
 
@@ -126,8 +131,3 @@ class CommentModel extends ActiveRecord
     }
 }
 ```
-
-## Support us
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/yii2mod). 
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
